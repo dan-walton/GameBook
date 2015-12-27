@@ -1,3 +1,4 @@
+// Game Container Function
 function newGame() {
 
 // Define approval rating - affects public perception & reaction
@@ -12,9 +13,13 @@ function newGame() {
 
 	var economyHealth = 0;
 
+// Create function which returns final score
+
 	function finalScore() {
 		return economyHealth + negotiatingAbility + approvalRating;
 	}
+
+// Create cheatCode function which lets the player win
 
 	function cheatCode() {
 		economyHealth += 100;
@@ -23,7 +28,7 @@ function newGame() {
 		sixthEvent();
 	}
 
-// Finds political ideology of player character
+// Reacts to ideology of player character
 
 	function findIdeology() {
 		if (userIdeology ==="right") {
@@ -112,6 +117,8 @@ function newGame() {
 			firstEvent();
 		}
 	}
+
+// Second event - Union or business aid
 
 	function secondEvent() {
 		var randomNum = Math.random();
@@ -215,20 +222,22 @@ function newGame() {
 		thirdEvent();		
 	}
 
+// Third event - leadership election or spill
+
 	function thirdEvent() {
 		if (approvalRating >= 20) {
-			alert("After a succcessful first term, you have been re-elected on a dramatic margin. Consumers are rejoiced with the news and decide to go on a spending spree. \nEconomy +10!");
+			alert("After a succcessful first term, you have been re-elected on a dramatic margin. Consumers are rejoiced with the news and decide to go on a spending spree.");
 			economyHealth += 10;
 		}
 		else if (approvalRating < 0) {
 			alert("After a mismanaged term in parliament, your party has been voted out and the economy remains in shambles. Your final score is " + finalScore());
-			return;
+			playAgain();
 		}
 		else {
 			var coup = prompt("After a mediocre first term, your party has been re-elected on the slightest of margins. However, your deputy leader, bill_turnbull_rudd_gillard, calls for a leadership spill. Do you stand down or remain?").toLowerCase();
 			if (coup == "stand down") {
 				alert("You stand down from leadership, and the economy falls apart.  Your final score is " + finalScore());
-				return;
+				playAgain();
 			}
 			else if (coup == "remain") {
 				var coupOdds = Math.random();
@@ -238,7 +247,7 @@ function newGame() {
 				}
 				else {
 					alert("BREAKING NEWS: " + userName + " has been removed from leadership in a shock spill. The stockmarket has fallen 1000 points on the news as bill_turnbull_rudd_gillard declares an atheist totalitarian theocracy. Your final score is " + finalScore());
-					return;
+					playAgain();
 				}
 			}
 			else if (coup == "jizz") {
@@ -252,6 +261,8 @@ function newGame() {
 
 		fourthEvent();
 	}
+
+// Passing of four budgets to complete term
 
 	function fourthEvent() {
 		var count = 0;
@@ -271,7 +282,7 @@ function newGame() {
 
 		if (approvalRating <= 0) {
 			alert("Your archrival bill_turnbull_rudd_gillard has announced a spill and defeated you, ending your political career. GAME OVER. Your final score is " + finalScore());
-			return;
+			playAgain();
 		}
 
 		else {
@@ -281,6 +292,7 @@ function newGame() {
 		fifthEvent();
 	}
 
+// Final battle - topple Trump and progress to end
 
 	function fifthEvent() {
 		alert("Your two terms are nearly over, however that pesky opposition leader xxx_donaldtrump_xxx is causing trouble again, spreading false rumours about corruption and vested interests as leader.")
@@ -340,34 +352,43 @@ function newGame() {
 
 			else if (trumpHealth >= 100) {
 				alert("Trump has defeated you and thrown your party out of government dramatically. Your final score is " + finalScore());
-				return;
+				playAgain();
 			}
 		}
 
 		sixthEvent();
 	}
 
+// End game handler
+
 	function sixthEvent() {
-		if (economyHealth >= 40 && approvalRating >= 40) {
+		if (finalScore() >= 100) {
 			alert("Well done " + userName + ", you have successfully maintained your approval rating whilst boosting the economy and 'trumping' countless foes in the process. Your final score is: " + finalScore());
+			document.getElementById("theImage").style.visibility = "visible";
 		}
 
 		else {
-			alert("Well " + userName + ", you have managed to scrape ever so slightly through the past eight years. Your final score is: " + finalScore());
+			alert("Well " + userName + ", you have managed to scrape through the past eight years. Your final score is: " + finalScore());
 		}
+
+		playAgain();
+	}
+	
+// Play agin function
+
+	function playAgain() {
 		var playAgain = prompt("Would you like to play again? \n Answer yes or no").toLowerCase();
 		if (playAgain == "yes") {
 			newGame();
 		}
-		else {
-			document.getElementById("theImage").style.visibility = "visible";
+		else if (playAgain == "no") {
 			return;
 		}
+		else {
+			alert("Please enter yes or no");
+			playAgain();
+		}
 	}
-	
-	// Code to get the functions going
-
-	// Alert and prompt for user name
 
 	
 	do {
@@ -376,7 +397,7 @@ function newGame() {
 	while (userIdeology !== "left" && userIdeology !== "right" && userIdeology !== "centre");
 	confirm("Your name is " + userName + " and your ideology is " + userIdeology);
 	findIdeology();
-	alert("The year is 2034. Algorithm-writing programming machines, now accountable for over 75% of the trades on the Dow Jones Index, have replaced many of the world's richest companies' stock portfolios with wool futures, causing the second global financial crisis. Having just been elected to office, you are faced with an economic crisis and must deal with business, consumers and the unions to bring the country back to prosperity. To succeed in this game, you must be a skilled negotiator, a pragmatic economist and a popular statesmen. Good Luck!");
+	alert("The year is 2034. Algorithm-writing programming machines, now accountable for over 75% of the trades on the Dow Jones Index, have replaced many of the world's richest companies' stock portfolios with wool futures, causing the second global financial crisis. Having just been elected to office, you are faced with an economic crisis and must deal with business, consumers and the unions to bring the country back to prosperity. To succeed in this game, you must be a skilled negotiator, a pragmatic economist and a popular statesmen. Your score will be recorded in each of these dimensions and will increase or decrease based on your responses to events. \n\nGood Luck!");
 	firstEvent();
 
 };
